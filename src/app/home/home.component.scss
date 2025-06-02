@@ -179,3 +179,47 @@
     width: inherit;
   }
 }
+
+.toggle-switch {
+  height: 48px;
+  width: 100%;
+  display: inline-block;
+  position: relative;
+  border-radius: 200px;
+  input {
+    display: none;
+    padding: 10px 20px;
+    &:checked + .slider {
+    }
+    &:checked + .slider::after {
+      -webkit-transform: translateX(48px);
+      -ms-transform: translateX(48px);
+      transform: translateX(48px);
+    }
+  }
+  .slider {
+    &:hover {
+      cursor: pointer;
+    }
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--intuise-color-text-primary);
+    border-radius: 100px;
+    transition: 250ms;
+    padding: 0 14px;
+    &::after {
+      position: absolute;
+      border-radius: 200px;
+      content: "";
+      height: 36px;
+      width: 36px;
+      background-color: white;
+      left: 6px;
+      bottom: 6px;
+      transition: 250ms;
+    }
+  }
+}

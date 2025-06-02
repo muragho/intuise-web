@@ -1,13 +1,88 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {
+  trigger,
+  transition,
+  style,
+  animate,
+  state,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
+  animations: [
+    trigger('slideAnimation', [
+      state(
+        'hidden',
+        style({
+          opacity: 0,
+          position: 'absolute',
+          right: '100px',
+        })
+      ),
+      state(
+        'visible',
+        style({
+          opacity: 1,
+          position: 'absolute',
+          right: '0',
+        })
+      ),
+      transition('hidden => visible', [
+        style({ display: 'block' }),
+        animate('200ms ease-out'),
+      ]),
+      transition('visible => hidden', [
+        animate(
+          '250ms ease-in',
+          style({
+            opacity: 0,
+            right: '-100px',
+          })
+        ),
+      ]),
+    ]),
+    trigger('slideReverseAnimation', [
+      state(
+        'hidden',
+        style({
+          opacity: 0,
+          position: 'absolute',
+          right: '100px',
+        })
+      ),
+      state(
+        'visible',
+        style({
+          opacity: 1,
+          position: 'absolute',
+          right: '0',
+        })
+      ),
+      transition('hidden => visible', [
+        style({ display: 'block' }),
+        animate('200ms ease-out'),
+      ]),
+      transition('visible => hidden', [
+        animate(
+          '250ms ease-in',
+          style({
+            opacity: 0,
+            right: '-200px',
+          })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class HomeComponent implements OnInit {
+  selected = false;
+  showMac = true;
+  showIphone = false;
   browse = [
     {
       id: 1,
@@ -130,5 +205,24 @@ export class HomeComponent implements OnInit {
     window.addEventListener('resize', () => {
       this.screenWidth = window.innerWidth;
     });
+  }
+
+  onToggleDevice(ev: any) {
+    console.log('ev', ev);
+    if (ev) {
+      // Pergi ke iPhone
+      this.showMac = false; // Hide Mac first
+      setTimeout(() => {
+        this.selected = true;
+        this.showIphone = true; // Show iPhone after delay
+      }, 300);
+    } else {
+      // Pergi ke Mac
+      this.showIphone = false; // Hide iPhone first
+      setTimeout(() => {
+        this.selected = false;
+        this.showMac = true; // Show Mac after delay
+      }, 300);
+    }
   }
 }

@@ -331,7 +331,7 @@
     class="bg-[url('/assets/Background-2.png')] bg-cover bg-center py-30"
   >
     <div class="px-5 md:px-[100px] flex flex-col md:flex-row gap-5">
-      <div class="w-full">
+      <div class="md:w-1/2">
         <h1
           class="uppercase text-[24px] md:text-[48px] font-bold font-['Work_Sans']"
           style="line-height: normal"
@@ -344,7 +344,7 @@
         <div class="flex flex-row items-center mt-10">
           <!-- FILTER -->
           <span
-            class="mb-[10px] md:mb-0 mr-4 md:mr-5 px-4 py-2 flex items-center justify-center gap-[10px] bg-[rgba(237,248,249,0.1)] rounded-full flex-none text-white text-xs hover:bg-[rgba(237,248,249,0.3)] hover:border-[rgba(138,138,138,0.8)] hover:cursor-pointer transition duration-200"
+            class="mb-[16px] md:mb-4 mr-4 md:mr-5 px-4 py-2 flex items-center justify-center gap-[10px] bg-[rgba(237,248,249,0.1)] rounded-full flex-none text-white text-xs hover:bg-[rgba(237,248,249,0.3)] hover:border-[rgba(138,138,138,0.8)] hover:cursor-pointer transition duration-200"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -363,7 +363,7 @@
             Filters
           </span>
           <!-- SUGGESTED FILTER -->
-          <div class="flex flex-row gap-2 items-center overflow-x-scroll">
+          <div class="flex flex-row gap-2 items-center overflow-x-scroll pb-2">
             @for (item of filter; track $index) {
             <span
               [ngClass]="{
@@ -449,9 +449,56 @@
 
       <!-- DEVICE -->
       <div
-        class="flex-auto p-[34px] rounded-2xl bg-[rgba(93,93,93,0.2)] flex justify-center items-center"
+        class="h-[300px] md:h-auto w-full overflow-hidden flex-auto p-[34px] rounded-2xl bg-[rgba(93,93,93,0.2)] flex justify-center items-center relative"
       >
-        <img src="/assets/Device-Macbook-Pro.png" alt="" />
+        <div class="absolute top-2 md:top-7 right-2 md:right-7 w-[96px] scale-70 md:scale-100">
+          <label class="toggle-switch">
+            <input
+              type="checkbox"
+              [(ngModel)]="selected"
+              (ngModelChange)="onToggleDevice($event)"
+            />
+            <div class="slider">
+              <div
+                class="h-full flex flex-row justify-between items-center relative z-[999]"
+              >
+                <img
+                  class="h-[20px] w-[20px]"
+                  [src]="
+                    '/assets/' +
+                    (!selected
+                      ? 'computer-active.svg'
+                      : 'computer-deactive.svg')
+                  "
+                  alt=""
+                />
+                <img
+                  class="h-[20px] w-[20px]"
+                  [src]="
+                    '/assets/' +
+                    (selected
+                      ? 'smartphone-active.svg'
+                      : 'smartphone-deactive.svg')
+                  "
+                  alt=""
+                />
+              </div>
+            </div>
+          </label>
+        </div>
+        <!-- Image with slide animation -->
+        <img
+          class="px-[60px] w-full h-[200px] md:h-[300px] object-contain"
+          src="/assets/Device-Macbook-Pro.png"
+          alt="Mac"
+          [@slideAnimation]="showMac ? 'visible' : 'hidden'"
+        />
+        <img
+          class="px-[60px] w-full h-[200px] md:h-[300px] object-contain"
+          [@slideReverseAnimation]="showIphone ? 'visible' : 'hidden'"
+          src="/assets/iphone-device.png"
+          alt="iPhone"
+        />
       </div>
     </div>
   </section>
