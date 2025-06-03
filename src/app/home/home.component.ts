@@ -83,6 +83,7 @@ export class HomeComponent implements OnInit {
   selected = false;
   showMac = true;
   showIphone = false;
+  toggleInProgress = false;
   browse = [
     {
       id: 1,
@@ -208,20 +209,24 @@ export class HomeComponent implements OnInit {
   }
 
   onToggleDevice(ev: any) {
-    console.log('ev', ev);
+    if (this.toggleInProgress) return; // Blokir klik selama animasi
+    this.toggleInProgress = true;
+
     if (ev) {
       // Pergi ke iPhone
-      this.showMac = false; // Hide Mac first
+      this.showMac = false;
       setTimeout(() => {
         this.selected = true;
-        this.showIphone = true; // Show iPhone after delay
+        this.showIphone = true;
+        this.toggleInProgress = false; // Buka lagi toggle
       }, 300);
     } else {
       // Pergi ke Mac
-      this.showIphone = false; // Hide iPhone first
+      this.showIphone = false;
       setTimeout(() => {
         this.selected = false;
-        this.showMac = true; // Show Mac after delay
+        this.showMac = true;
+        this.toggleInProgress = false;
       }, 300);
     }
   }
